@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
+const User = require('./User');
+const Comment = require('./Comments');
 const Blog = sequelize.define('Blog', {
   title: {
     type: DataTypes.STRING,
@@ -28,4 +30,7 @@ const Blog = sequelize.define('Blog', {
   
 });
 
+Blog.hasMany(Comment, {
+  onDelete: 'CASCADE'
+});
 module.exports = Blog;
