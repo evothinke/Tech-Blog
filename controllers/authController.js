@@ -15,3 +15,29 @@ exports.register = async (req, res) => {
     res.render('error');
   }
 };
+
+exports.loginForm = (req, res) => {
+  res.render('login');
+};
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ where: { username, password } });
+    if (user) {
+      req.session.user = user;
+      req.session.save(() => {
+        if (req.headers.accept.includes('application/json')) {
+          res.json({ redirect: '/dashboard' });
+        } else {
+          res.redirect('/dashboard');
+        }
+      });
+    } else {
+      res.render('login', { error: 'Invalid username or password' });
+    }
+  } catch (err) {
+    console.error('Error logging in:', err);
+    res.render('error');
+  }
+};
