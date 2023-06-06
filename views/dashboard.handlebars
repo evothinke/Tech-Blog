@@ -1,0 +1,24 @@
+<div id="pagetitle">Your posts</div>
+<div id="createNewpost">
+  <a href="/blog/create"><img src="../images/add.png" width="3%" height="3%"></a>
+  
+</div>
+<br><br>
+{{#each posts}}
+<div class="jumbotron">
+  <h1 class="display-4">{{title}}</h1>
+ <!-- Example usage of the formatDate helper -->
+<p>Posted on: {{formatDate this.createdAt}}</p>
+
+
+  <hr class="my-4">
+  <p>{{content}}</p>
+  <p class="lead">
+  <div class="blog-actions">
+    <a href="/blog/{{id}}/edit" class="btn btn-primary">Edit</a>
+    <a href="/blog/{{id}}/delete" class="btn btn-danger">Delete</a>
+  </div>
+  </p>
+</div>{{/each}}
+
+

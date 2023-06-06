@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   // Handle the root URL request here
   res.render('../views/index.handlebars');
 });
-// Blog Routes
+//blog Routes
 router.get('/blog', blogController.index);
 router.get('/blog/create', blogController.createForm);
 router.post('/blog/create', blogController.create);
@@ -19,7 +19,7 @@ router.get('/blog/:id/edit', blogController.editForm);
 router.post('/blog/:id/edit', blogController.update);
 router.get('/blog/:id/delete', blogController.delete);
 
-// Authentication Routes
+//authentication Routes
 router.get('/register', authController.registerForm);
 router.post('/register', authController.register);
 router.get('/login', authController.loginForm);
