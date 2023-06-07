@@ -6,7 +6,7 @@ const session = require('express-session');
 const port = 3001;
 const indexRoutes = require('./routes/index');
 const blogRoutes = require('./routes/blog');
-const authRoutes = require('./routes/index');
+const authRoutes = require('./routes/auth');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
