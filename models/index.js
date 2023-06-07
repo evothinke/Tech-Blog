@@ -1,16 +1,36 @@
-const Sequelize = require('sequelize');
-const config = require('../config/config.json');
-const Comments = require('../models/Comments');
+const Users = require('./Users');
+const Blogs = require('./Blogs');
+const Comments = require('./Comments');
 
+Users.hasMany(Blogs, {
+    foreignKey: 'user_id'
+});
+Blogs.belongsTo(Users, {
+    foreignKey: 'user_id'
+});
 
-const env = process.env.NODE_ENV || 'development';
-const sequelize = new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
+Comments.belongsTo(Users, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true
+});
 
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+Comments.belongsTo(Posts, {
+    foreignKey: 'BlogId',
+    onDelete: 'cascade',
+    hooks: true
+});
 
-db.Blog = require('./Blogs')(sequelize, Sequelize);
-db.User = require('./Users')(sequelize, Sequelize);
+Users.hasMany(Comments, {
+    foreignKey: 'user_id',
+    onDelete: 'cascade',
+    hooks:true
+});
 
-module.exports = db;
+Blogs.hasMany(Comment, {
+    foreignKey: 'BlogId',
+    onDelete: 'cascade',
+    hooks:true
+})
+
+module.exports = { User, Post, Comment };

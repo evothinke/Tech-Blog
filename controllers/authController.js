@@ -30,8 +30,8 @@ exports.loginForm = (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findOne({ where: { username, password } });
-    if (user) {
+    const user = await User.findOne({ where: { username } });
+    if (user && (await bcrypt.compare(password, user.password))) {
       req.session.user = user;
       req.session.save(() => {
         if (req.headers.accept.includes('application/json')) {
@@ -48,3 +48,4 @@ exports.login = async (req, res) => {
     res.render('error');
   }
 };
+
