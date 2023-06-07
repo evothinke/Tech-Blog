@@ -1,0 +1,86 @@
+/* styles for blog posts */
+.blog-post {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .blog-post h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .blog-post p {
+    margin-bottom: 10px;
+  }
+  
+  .blog-post a {
+    margin-right: 10px;
+  }
+  
+  /* styles for create button */
+  .create-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .create-button:hover {
+    background-color: #23527c;
+  }
+  
+  .create-button:focus {
+    outline: none;
+  }
+  
+  
+  
+  .navbar {
+    font-family: 'Exo 2', sans-serif;
+  }
+  
+  .navbar-nav {
+    font-family: 'Exo 2', sans-serif;
+  
+  
+  }
+  
+  .p {
+    font-family: 'Exo 2', sans-serif;
+  
+  }
+  
+  .navbar-text {
+    font-family: 'Exo 2', sans-serif;
+    margin: auto;
+    padding: 0;
+  }
+  
+  .container {
+    font-family: 'Exo 2', sans-serif;
+  }
+  
+  #createNewpost {
+    text-align: right;
+  }
+  
+  #pagetitle {
+    font-size: 42px;
+    color: #00979f;
+    margin-top: 2%;
+  }
+  
+  .jumbotron {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  #login {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+  }

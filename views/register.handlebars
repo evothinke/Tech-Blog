@@ -1,5 +1,4 @@
 
-
 <form id="registrationForm" action="/register" method="POST">
   <div class="form-group">
     <label for="username">Username</label>
@@ -9,24 +8,13 @@
     <label for="password">Password</label>
     <input type="password" name="password" id="password" class="form-control" required>
   </div>
-  <div class="form-group">
-    <label for="confirmPassword">Confirm Password</label>
-    <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" required>
-    <small id="passwordError" class="text-danger"></small>
-  </div>
+
+  <small id="passwordError" class="text-danger"></small>
+  <div id="signupMessage" class="text-danger"></div>
   <button type="submit" class="btn btn-primary">Register</button>
 </form>
 
-<script>
-  const registrationForm = document.getElementById('registrationForm');
-  const passwordInput = document.getElementById('password');
-  const confirmPasswordInput = document.getElementById('confirmPassword');
-  const passwordError = document.getElementById('passwordError');
 
-  registrationForm.addEventListener('submit', function(event) {
-    if (passwordInput.value !== confirmPasswordInput.value) {
-      event.preventDefault();
-      passwordError.textContent = 'Passwords do not match.';
-    }
-  });
-</script>
+
+<script src="../js/register.js"></script>
+

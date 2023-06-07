@@ -1,5 +1,5 @@
-const Blog = require('../models/Blog');
-const User = require('../models/User');
+const Blog = require('../models/Blogs');
+const User = require('../models/Users');
 const Comments = require('../models/Comments');
 
 exports.blog = (req, res) => {

@@ -1,0 +1,12 @@
+<div id="pagetitle">Edit Post</div>
+<form action="/blog/{{blog.id}}/edit" method="POST">
+  <label for="title">Title:</label>
+  <input type="text" class="form-control" name="title" id="title" value="{{blog.title}}">
+
+  <label for="content">Content:</label>
+  <textarea class="form-control"  name="content" id="content">{{blog.content}}</textarea>
+
+  <button class="btn btn-primary" type="submit">Update Blog</button>
+</form>
+
+

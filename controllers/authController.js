@@ -1,18 +1,25 @@
-const User = require('../models/User');
+const User = require('../models/Users');
+const bcrypt = require('bcrypt');
+ // Assuming `user` is the user object retrieved from the database
+//const userId = req.session.user ? req.session.user.id : null;
 
 exports.registerForm = (req, res) => {
   res.render('register');
 };
-
-exports.register = async (req, res) => {
-  const { username, password } = req.body;
+module.exports.register = async (req, res) => {
   try {
+    const { username, password } = req.body;
+
+    const existingUser = await User.findOne({ where: { username } });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User with the specified username already exists.' });
+    }
+
     const user = await User.create({ username, password });
-    console.log('User registered:', user);
-    res.redirect('/dashboard');
-  } catch (err) {
-    console.error('Error registering user:', err);
-    res.render('error');
+    res.status(201).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while creating the user.' });
   }
 };
 
