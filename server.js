@@ -45,17 +45,7 @@ function formatDate(date) {
 
 
 // Configure Handlebars
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main',
-  helpers: {
-    formatDate: formatDate // Register the helper function
-  },
-  // Disable strict mode for property access
-  runtimeOptions: {
-    allowProtoMethodsByDefault: true,
-    allowProtoPropertiesByDefault: true
-  }
-}));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 
