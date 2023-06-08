@@ -6,7 +6,7 @@ const session = require('express-session');
 const port = 3001;
 const indexRoutes = require('./routes/index');
 const blogRoutes = require('./routes/blog');
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/index');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
@@ -45,7 +45,17 @@ function formatDate(date) {
 
 
 // Configure Handlebars
-app.engine('handlebars', hbs.engine);
+app.engine('handlebars', exphbs.engine({
+  defaultLayout: 'main',
+  helpers: {
+    formatDate: formatDate // Register the helper function
+  },
+  // Disable strict mode for property access
+  runtimeOptions: {
+    allowProtoMethodsByDefault: true,
+    allowProtoPropertiesByDefault: true
+  }
+}));
 app.set('view engine', 'handlebars');
 
 

@@ -1,13 +1,13 @@
-const Blog = require('../models/Blogs');
-const User = require('../models/Users');
-const Comments = require('../models/Comments');
-
+// const Blogs = require('../models/Blogs');
+// const Users = require('../models/Users');
+// const Comments = require('../models/Comments');
+const { Blogs, Users, Comments } = require('../models');
 exports.blog = (req, res) => {
   res.render('blog', { loggedInUser: req.session.user });
 };
 
 exports.index = (req, res) => {
-  Blog.findAll({ include: [User, Comments], logging: console.log })
+  Blogs.findAll({ include: [{ model: Users, include: [Comments] }], logging: console.log })
     .then(blogs => {
       blogs.forEach(blog => {
         console.log("Comments:", blog.Comments);
@@ -20,12 +20,11 @@ exports.index = (req, res) => {
     });
 };
 
-
 exports.getBlogById = async (req, res) => {
   try {
     const blogId = req.params.id;
-    const blog = await Blog.findByPk(blogId, {
-      include: Comments
+    const blog = await Blogs.findByPk(blogId, {
+      include: [Comments]
     });
 
     res.render('blog/post', { blog });
@@ -43,7 +42,7 @@ exports.create = async (req, res) => {
   const { title, content } = req.body;
   const userId = req.session.user.id;
   try {
-    const blog = await Blog.create({ title, content, belongsto: userId });
+    const blog = await Blogs.create({ title, content, belongsto: userId });
     console.log('New blog created:', blog);
     res.redirect('/dashboard');
   } catch (err) {
@@ -54,7 +53,7 @@ exports.create = async (req, res) => {
 
 exports.editForm = (req, res) => {
   const blogId = req.params.id;
-  Blog.findByPk(blogId)
+  Blogs.findByPk(blogId)
     .then(blog => {
       res.render('blog/edit', { blog });
     })
@@ -67,7 +66,7 @@ exports.editForm = (req, res) => {
 exports.update = (req, res) => {
   const blogId = req.params.id;
   const { title, content } = req.body;
-  Blog.update({ title, content }, { where: { id: blogId } })
+  Blogs.update({ title, content }, { where: { id: blogId } })
     .then(() => {
       res.redirect('/blog');
     })
@@ -79,7 +78,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const blogId = req.params.id;
-  Blog.destroy({ where: { id: blogId } })
+  Blogs.destroy({ where: { id: blogId } })
     .then(() => {
       res.redirect('/blog');
     })

@@ -1,20 +1,40 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
-const User = require('./Users');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-const Comments = sequelize.define('Comments', {
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: 'User',
-      key: 'id'
+class Comments extends Model { }
+
+Comments.init(
+
+
+  {
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    blogId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Comments',
+        key: 'id'
+      }
+
     }
+
   },
-});
+  {
+    sequelize,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Comments'
+  }
+);
 
 
 module.exports = Comments;

@@ -1,47 +1,42 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const db = require('../database');
-const Blog = require('./Blogs');
-const Comments = require('./Comments');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
-const sequelize = require('../database');
 
+class Users extends Model {}
 
-const User = db.define('User', {
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-},
-{
-  sequelize,
-  modelName: 'User',
-  hooks: {
-    beforeCreate: async (user) => {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(user.password, salt);
-      user.password = hashedPassword;
+Users.init(
+  {
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
-    beforeUpdate: async (user) => {
-      if (user.password) {
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  },
+  {
+    sequelize,
+    modelName: 'Users',
+    hooks: {
+      beforeCreate: async (user) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(user.password, salt);
         user.password = hashedPassword;
+      },
+      beforeUpdate: async (user) => {
+        if (user.password) {
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(user.password, salt);
+          user.password = hashedPassword;
+        }
       }
-    }
+    },
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true
   }
-}
-
 );
 
-User.hasMany(Blog, { foreignKey: 'belongsTo' });
-//User.hasMany(Comments, {foreignKey: 'commentleftby'});
-Blog.belongsTo(User, { foreignKey: 'belongsTo' });
-//Comments.belongsTo(User, {foreignKey: 'commentleftby'});
-
-
-module.exports = User;
+module.exports = Users;

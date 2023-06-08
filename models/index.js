@@ -1,36 +1,48 @@
 const Users = require('./Users');
 const Blogs = require('./Blogs');
 const Comments = require('./Comments');
+const sequelize = require('../config/connection');
 
 Users.hasMany(Blogs, {
-    foreignKey: 'user_id'
+  foreignKey: 'belongsto',
+  onDelete: 'cascade',
+  hooks: true
 });
 Blogs.belongsTo(Users, {
-    foreignKey: 'user_id'
+  foreignKey: 'belongsto'
 });
 
 Comments.belongsTo(Users, {
-    foreignKey: 'user_id',
-    onDelete: 'cascade',
-    hooks:true
+  foreignKey: 'user_id',
+  onDelete: 'cascade',
+  hooks: true
 });
 
-Comments.belongsTo(Posts, {
-    foreignKey: 'BlogId',
-    onDelete: 'cascade',
-    hooks: true
+Comments.belongsTo(Blogs, {
+  foreignKey: 'blogId',
+  onDelete: 'cascade',
+  hooks: true
 });
 
 Users.hasMany(Comments, {
-    foreignKey: 'user_id',
-    onDelete: 'cascade',
-    hooks:true
+  foreignKey: 'user_id',
+  onDelete: 'cascade',
+  hooks: true
 });
 
-Blogs.hasMany(Comment, {
-    foreignKey: 'BlogId',
-    onDelete: 'cascade',
-    hooks:true
-})
+Blogs.hasMany(Comments, {
+  foreignKey: 'blogId',
+  onDelete: 'cascade',
+  hooks: true
+});
 
-module.exports = { User, Post, Comment };
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Database synchronized');
+    // Start your server or perform any other operations
+  })
+  .catch(err => {
+    console.error('Error synchronizing database:', err);
+  });
+
+module.exports = { Users, Blogs, Comments };
