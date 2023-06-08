@@ -3,7 +3,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const app = express();
 const session = require('express-session');
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 const indexRoutes = require('./routes/index');
 const blogRoutes = require('./routes/blog');
 const authRoutes = require('./routes/index');
@@ -73,6 +73,6 @@ app.use((req, res, next) => {
 
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
