@@ -2,6 +2,8 @@
 
 Welcome to the Tech Blog, a CMS-style blog site where you can publish articles, blog posts, and share your thoughts and opinions on various tech topics.
 
+You can view the app in action <a href="https://evotechblog.herokuapp.com/blog">here</a>
+
 ## Table of Contents
 
 - [Introduction](#introduction)
